@@ -24,7 +24,7 @@ export function GridProgress({
     }
   }, [gameStatus]);
 
-  // Calculate the path the player should take
+  // Calculate the path the player should take with wrapping
   const calculatePath = () => {
     const path = [{ x: 1, y: 1 }]; // Starting position
     let currentPos = { x: 1, y: 1 };
@@ -35,16 +35,20 @@ export function GridProgress({
       
       switch (command) {
         case 'atas':
-          newPos.y = Math.max(0, currentPos.y - 1);
+          newPos.y = currentPos.y - 1;
+          if (newPos.y < 0) newPos.y = gridSize.height - 1; // Wrap to bottom
           break;
         case 'bawah':
-          newPos.y = Math.min(gridSize.height - 1, currentPos.y + 1);
+          newPos.y = currentPos.y + 1;
+          if (newPos.y >= gridSize.height) newPos.y = 0; // Wrap to top
           break;
         case 'kiri':
-          newPos.x = Math.max(0, currentPos.x - 1);
+          newPos.x = currentPos.x - 1;
+          if (newPos.x < 0) newPos.x = gridSize.width - 1; // Wrap to right
           break;
         case 'kanan':
-          newPos.x = Math.min(gridSize.width - 1, currentPos.x + 1);
+          newPos.x = currentPos.x + 1;
+          if (newPos.x >= gridSize.width) newPos.x = 0; // Wrap to left
           break;
       }
       

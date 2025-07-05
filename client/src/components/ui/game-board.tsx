@@ -55,11 +55,13 @@ export function GameBoard({ gameState, onPlayerInput, onLevelSelect }: GameBoard
           {/* Game Section */}
           <div className="flex-1 flex flex-col items-center justify-center space-y-8">
             {/* Show directional controls only on level 1 */}
-            {gameState.level === 1 && (
+            {gameState.level === 1 ? (
               <DirectionalControls 
                 onInput={onPlayerInput}
                 disabled={!gameState.isWaitingForInput}
               />
+            ) : (
+              <div className="h-32"></div>
             )}
             
             {/* Grid Progress Display */}

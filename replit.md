@@ -101,6 +101,12 @@ This is a React-based coding game application that teaches programming concepts 
 ```
 Changelog:
 - July 05, 2025. Initial setup
+- July 05, 2025. Updated game with:
+  - Smaller arrow controls that only appear on level 1
+  - Grid wrapping functionality (movement wraps around edges)
+  - Advanced programming concepts (loops, functions) for higher levels
+  - Multi-line code display with proper indentation
+  - Enhanced level progression system
 ```
 
 ## User Preferences

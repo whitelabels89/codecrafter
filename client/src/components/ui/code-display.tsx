@@ -5,8 +5,19 @@ interface CodeDisplayProps {
 }
 
 export function CodeDisplay({ codeSequence, currentStep, gameStatus }: CodeDisplayProps) {
-  const getLineStyle = (index: number) => {
-    const baseClasses = "text-6xl font-bold text-code-blue transition-all duration-300";
+  const getLineStyle = (index: number, line: string = '') => {
+    // Different sizes for different types of code lines
+    const isIndented = line && line.startsWith('  ');
+    const isLoop = line && (line.includes('for') || line.includes('def') || line.includes('while'));
+    
+    let baseClasses = "";
+    if (isLoop) {
+      baseClasses = "text-4xl font-bold text-code-blue transition-all duration-300";
+    } else if (isIndented) {
+      baseClasses = "text-5xl font-bold text-code-blue transition-all duration-300 ml-8";
+    } else {
+      baseClasses = "text-6xl font-bold text-code-blue transition-all duration-300";
+    }
     
     if (index < currentStep) {
       // Completed code line
@@ -28,7 +39,7 @@ export function CodeDisplay({ codeSequence, currentStep, gameStatus }: CodeDispl
         {codeSequence.map((code, index) => (
           <div 
             key={index}
-            className={getLineStyle(index)}
+            className={getLineStyle(index, code)}
           >
             {code}
           </div>

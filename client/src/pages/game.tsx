@@ -33,19 +33,58 @@ export default function Game() {
   });
 
   const generateLevel = useCallback((level: number) => {
-    const commands = ['kanan', 'atas', 'kiri', 'bawah'];
-    const sequenceLength = Math.min(3 + Math.floor(level / 2), 6);
+    const basicCommands = ['kanan', 'atas', 'kiri', 'bawah'];
+    let codeSequence: string[] = [];
+    let displaySequence: string[] = [];
     
-    const codeSequence = [];
-    for (let i = 0; i < sequenceLength; i++) {
-      const randomCommand = commands[Math.floor(Math.random() * commands.length)];
-      codeSequence.push(randomCommand);
+    if (level <= 3) {
+      // Basic movement levels
+      const sequenceLength = Math.min(3 + level, 6);
+      for (let i = 0; i < sequenceLength; i++) {
+        const randomCommand = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+        codeSequence.push(randomCommand);
+      }
+      displaySequence = codeSequence.map(cmd => `${cmd}()`);
+    } else if (level <= 6) {
+      // Simple loop levels: for i in range(2): kanan()
+      const loopCount = Math.min(level - 2, 3);
+      const command = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      
+      // Generate the actual sequence
+      for (let i = 0; i < loopCount; i++) {
+        codeSequence.push(command);
+      }
+      
+      // Display with loop syntax
+      displaySequence = [`for i in range(${loopCount}):`];
+      displaySequence.push(`  ${command}()`);
+    } else if (level <= 10) {
+      // Nested loops or multiple commands in loop
+      const loopCount = 2;
+      const commands = basicCommands.slice(0, 2); // Only use 2 commands
+      
+      for (let i = 0; i < loopCount; i++) {
+        commands.forEach(cmd => codeSequence.push(cmd));
+      }
+      
+      displaySequence = [`for i in range(${loopCount}):`];
+      commands.forEach(cmd => displaySequence.push(`  ${cmd}()`));
+    } else {
+      // Advanced levels with functions and while loops
+      const repeatCount = Math.min(level - 8, 4);
+      const command = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      
+      for (let i = 0; i < repeatCount; i++) {
+        codeSequence.push(command);
+      }
+      
+      displaySequence = [`def move():`];
+      displaySequence.push(`  ${command}()`);
+      displaySequence.push(`for i in range(${repeatCount}):`);
+      displaySequence.push(`  move()`);
     }
     
-    return {
-      codeSequence,
-      displaySequence: codeSequence.map(cmd => `${cmd}()`)
-    };
+    return { codeSequence, displaySequence };
   }, []);
 
   const initializeGame = useCallback(() => {
@@ -77,21 +116,25 @@ export default function Game() {
     const expectedCommand = gameState.codeSequence[gameState.currentStep];
 
     if (command === expectedCommand) {
-      // Correct input - move position
+      // Correct input - move position with wrapping
       let newPosition = { ...gameState.currentPosition };
       
       switch (command) {
         case 'atas':
-          newPosition.y = Math.max(0, gameState.currentPosition.y - 1);
+          newPosition.y = gameState.currentPosition.y - 1;
+          if (newPosition.y < 0) newPosition.y = gameState.gridSize.height - 1; // Wrap to bottom
           break;
         case 'bawah':
-          newPosition.y = Math.min(gameState.gridSize.height - 1, gameState.currentPosition.y + 1);
+          newPosition.y = gameState.currentPosition.y + 1;
+          if (newPosition.y >= gameState.gridSize.height) newPosition.y = 0; // Wrap to top
           break;
         case 'kiri':
-          newPosition.x = Math.max(0, gameState.currentPosition.x - 1);
+          newPosition.x = gameState.currentPosition.x - 1;
+          if (newPosition.x < 0) newPosition.x = gameState.gridSize.width - 1; // Wrap to right
           break;
         case 'kanan':
-          newPosition.x = Math.min(gameState.gridSize.width - 1, gameState.currentPosition.x + 1);
+          newPosition.x = gameState.currentPosition.x + 1;
+          if (newPosition.x >= gameState.gridSize.width) newPosition.x = 0; // Wrap to left
           break;
       }
       
