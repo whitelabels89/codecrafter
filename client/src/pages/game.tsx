@@ -3,6 +3,7 @@ import { GameBoard } from "@/components/ui/game-board";
 import { DirectionalControls } from "@/components/ui/directional-controls";
 import { ProgressIndicators } from "@/components/ui/progress-indicators";
 import { CodeDisplay } from "@/components/ui/code-display";
+import { GridProgress } from "@/components/ui/grid-progress";
 
 interface GameState {
   currentStep: number;
@@ -13,22 +14,26 @@ interface GameState {
   isWaitingForInput: boolean;
   level: number;
   gameStatus: 'playing' | 'completed' | 'error';
+  currentPosition: { x: number; y: number };
+  gridSize: { width: number; height: number };
 }
 
 export default function Game() {
   const [gameState, setGameState] = useState<GameState>({
     currentStep: 0,
-    maxSteps: 3,
-    codeSequence: ['kanan', 'maju', 'kiri'],
-    displaySequence: ['kanan()', 'maju()', 'kiri()'],
+    maxSteps: 4,
+    codeSequence: ['atas', 'kanan', 'bawah', 'kiri'],
+    displaySequence: ['atas()', 'kanan()', 'bawah()', 'kiri()'],
     playerSequence: [],
     isWaitingForInput: true,
     level: 1,
-    gameStatus: 'playing'
+    gameStatus: 'playing',
+    currentPosition: { x: 1, y: 1 },
+    gridSize: { width: 3, height: 3 }
   });
 
   const generateLevel = useCallback((level: number) => {
-    const commands = ['kanan', 'maju', 'kiri', 'mundur'];
+    const commands = ['kanan', 'atas', 'kiri', 'bawah'];
     const sequenceLength = Math.min(3 + Math.floor(level / 2), 6);
     
     const codeSequence = [];
@@ -53,7 +58,8 @@ export default function Game() {
       displaySequence,
       playerSequence: [],
       isWaitingForInput: true,
-      gameStatus: 'playing'
+      gameStatus: 'playing',
+      currentPosition: { x: 1, y: 1 }
     }));
   }, [gameState.level, generateLevel]);
 
@@ -61,8 +67,8 @@ export default function Game() {
     if (!gameState.isWaitingForInput || gameState.gameStatus !== 'playing') return;
 
     const directionMap: { [key: string]: string } = {
-      'up': 'maju',
-      'down': 'mundur',
+      'up': 'atas',
+      'down': 'bawah',
       'left': 'kiri',
       'right': 'kanan'
     };
@@ -71,14 +77,32 @@ export default function Game() {
     const expectedCommand = gameState.codeSequence[gameState.currentStep];
 
     if (command === expectedCommand) {
-      // Correct input
+      // Correct input - move position
+      let newPosition = { ...gameState.currentPosition };
+      
+      switch (command) {
+        case 'atas':
+          newPosition.y = Math.max(0, gameState.currentPosition.y - 1);
+          break;
+        case 'bawah':
+          newPosition.y = Math.min(gameState.gridSize.height - 1, gameState.currentPosition.y + 1);
+          break;
+        case 'kiri':
+          newPosition.x = Math.max(0, gameState.currentPosition.x - 1);
+          break;
+        case 'kanan':
+          newPosition.x = Math.min(gameState.gridSize.width - 1, gameState.currentPosition.x + 1);
+          break;
+      }
+      
       const newStep = gameState.currentStep + 1;
       const newPlayerSequence = [...gameState.playerSequence, command];
       
       setGameState(prev => ({
         ...prev,
         currentStep: newStep,
-        playerSequence: newPlayerSequence
+        playerSequence: newPlayerSequence,
+        currentPosition: newPosition
       }));
 
       if (newStep >= gameState.maxSteps) {
@@ -110,6 +134,13 @@ export default function Game() {
       }, 1500);
     }
   }, [gameState, initializeGame]);
+
+  const handleLevelSelect = useCallback((level: number) => {
+    setGameState(prev => ({
+      ...prev,
+      level: level
+    }));
+  }, []);
 
   // Initialize game on mount and level change
   useEffect(() => {
@@ -144,6 +175,7 @@ export default function Game() {
       <GameBoard 
         gameState={gameState}
         onPlayerInput={handlePlayerInput}
+        onLevelSelect={handleLevelSelect}
       />
     </div>
   );

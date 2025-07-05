@@ -27,6 +27,7 @@
   /* Custom Game Colors */
   --game-bg: hsl(0, 0%, 96%);
   --teal-primary: hsl(174, 62%, 56%);
+  --pink-primary: hsl(340, 75%, 55%);
   --code-blue: hsl(210, 29%, 24%);
   --control-gray: hsl(207, 7%, 58%);
   --control-gray-hover: hsl(207, 7%, 48%);
@@ -77,6 +78,10 @@
   
   .bg-teal-primary {
     background-color: var(--teal-primary);
+  }
+  
+  .bg-pink-primary {
+    background-color: var(--pink-primary);
   }
   
   .text-code-blue {

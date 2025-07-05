@@ -71,7 +71,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/generate-level", async (req, res) => {
     try {
       const { level } = req.body;
-      const commands = ['kanan', 'maju', 'kiri', 'mundur'];
+      const commands = ['kanan', 'atas', 'kiri', 'bawah'];
       const sequenceLength = Math.min(3 + level, 6);
       
       const codeSequence = [];
