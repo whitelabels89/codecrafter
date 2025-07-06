@@ -157,15 +157,15 @@ export function GridProgress({
         Array.from({ length: gridSize.width }, (_, x) => (
           <div 
             key={`${x}-${y}`} 
-            className={getCircleStyle(x, y)}
+            className={`${getCircleStyle(x, y)} relative`}
             style={getCircleInlineStyle()}
           >
             {currentPosition.x === x && currentPosition.y === y && (
               <div 
-                className="bg-teal-primary rounded-full"
+                className="bg-white bg-opacity-40 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
                 style={{
-                  width: `${circleSize * 2}px`,
-                  height: `${circleSize * 2}px`
+                  width: `${circleSize * 1.5}px`,
+                  height: `${circleSize * 1.5}px`
                 }}
               ></div>
             )}
