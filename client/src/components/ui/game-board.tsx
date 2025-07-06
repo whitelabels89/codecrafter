@@ -27,8 +27,8 @@ export function GameBoard({ gameState, onPlayerInput, onLevelSelect }: GameBoard
 
   return (
     <>
-      {/* Menu Icon */}
-      <div className="absolute top-6 left-6 z-10">
+      {/* Menu Icon - Only show on desktop */}
+      <div className="absolute top-6 left-6 z-10 hidden lg:block">
         <button
           onClick={() => setShowLevelSelector(true)}
           className="grid grid-cols-3 gap-1 w-8 h-8 hover:opacity-70 transition-opacity"
@@ -96,6 +96,14 @@ export function GameBoard({ gameState, onPlayerInput, onLevelSelect }: GameBoard
 
         {/* Mobile/Tablet Layout */}
         <div className="lg:hidden flex flex-col items-center space-y-6 w-full max-w-sm py-8">
+          {/* Mobile Level Selector Button */}
+          <button
+            onClick={() => setShowLevelSelector(true)}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium"
+          >
+            Level {gameState.level}
+          </button>
+          
           {/* Progress Indicators */}
           <ProgressIndicators 
             currentStep={gameState.currentStep}
