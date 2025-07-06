@@ -69,9 +69,24 @@ export default function Game() {
       
       displaySequence = [`for i in range(${loopCount}):`];
       commands.forEach(cmd => displaySequence.push(`  ${cmd}()`));
+    } else if (level <= 15) {
+      // While loop levels - seperti di gambar: kanan(), while ●: kanan(), atas()
+      const firstCommand = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const loopCommand = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const lastCommand = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      
+      // Sequence: first command, then loop command, then last command
+      codeSequence.push(firstCommand);
+      codeSequence.push(loopCommand);
+      codeSequence.push(lastCommand);
+      
+      displaySequence = [`${firstCommand}()`];
+      displaySequence.push(`while ●:`);
+      displaySequence.push(`  ${loopCommand}()`);
+      displaySequence.push(`  ${lastCommand}()`);
     } else {
       // Advanced levels with functions and while loops
-      const repeatCount = Math.min(level - 8, 4);
+      const repeatCount = Math.min(level - 12, 4);
       const command = basicCommands[Math.floor(Math.random() * basicCommands.length)];
       
       for (let i = 0; i < repeatCount; i++) {

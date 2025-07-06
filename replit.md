@@ -107,6 +107,12 @@ Changelog:
   - Advanced programming concepts (loops, functions) for higher levels
   - Multi-line code display with proper indentation
   - Enhanced level progression system
+- July 06, 2025. Added while loop levels and improved visual design:
+  - Added while loop levels (11-15) with proper indentation
+  - Enlarged grid dots from 20x20 to 24x24 pixels
+  - Improved code display with color coding (while loops in red)
+  - Better spacing between grid elements
+  - Fixed sequence generation for while loops
 ```
 
 ## User Preferences

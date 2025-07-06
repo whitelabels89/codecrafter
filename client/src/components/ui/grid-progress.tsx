@@ -68,7 +68,7 @@ export function GridProgress({
     const isInPath = pathIndex !== -1;
     const isCompleted = pathIndex !== -1 && pathIndex < currentStep;
     
-    const baseClasses = "w-20 h-20 rounded-full transition-all duration-300";
+    const baseClasses = "w-24 h-24 rounded-full transition-all duration-300";
     const celebrationClasses = celebrationActive ? "animate-pulse" : "";
     
     if (isCurrentPosition) {
@@ -89,12 +89,12 @@ export function GridProgress({
   };
 
   return (
-    <div className="grid grid-cols-3 gap-4 p-4">
+    <div className="grid grid-cols-3 gap-6 p-6">
       {Array.from({ length: gridSize.height }, (_, y) =>
         Array.from({ length: gridSize.width }, (_, x) => (
           <div key={`${x}-${y}`} className={getCircleStyle(x, y)}>
             {currentPosition.x === x && currentPosition.y === y && (
-              <div className="w-6 h-6 bg-teal-primary rounded-full"></div>
+              <div className="w-8 h-8 bg-teal-primary rounded-full"></div>
             )}
           </div>
         ))

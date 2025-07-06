@@ -12,7 +12,13 @@ export function CodeDisplay({ codeSequence, currentStep, gameStatus }: CodeDispl
     
     let baseClasses = "";
     if (isLoop) {
-      baseClasses = "text-4xl font-bold text-code-blue transition-all duration-300";
+      baseClasses = "text-5xl font-bold transition-all duration-300";
+      // Different colors for different loop types
+      if (line.includes('while')) {
+        baseClasses += " text-red-600"; // While loops in red/maroon
+      } else {
+        baseClasses += " text-code-blue"; // For loops in blue
+      }
     } else if (isIndented) {
       baseClasses = "text-5xl font-bold text-code-blue transition-all duration-300 ml-8";
     } else {
