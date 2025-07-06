@@ -49,11 +49,20 @@ export function GameBoard({ gameState, onPlayerInput, onLevelSelect }: GameBoard
       )}
 
       {/* Main Game Container */}
-      <div className="min-h-screen flex items-center justify-center px-8">
-        <div className="w-full max-w-7xl flex items-center justify-between">
+      <div className="min-h-screen flex items-center justify-center px-4 sm:px-8">
+        
+        {/* Desktop Layout */}
+        <div className="hidden lg:flex w-full max-w-7xl items-center justify-between">
           
           {/* Game Section */}
           <div className="flex-1 flex flex-col items-center justify-center space-y-8">
+            {/* Progress Indicators */}
+            <ProgressIndicators 
+              currentStep={gameState.currentStep}
+              maxSteps={gameState.maxSteps}
+              gameStatus={gameState.gameStatus}
+            />
+            
             {/* Show directional controls only on level 1 */}
             {gameState.level === 1 && (
               <DirectionalControls 
@@ -84,15 +93,57 @@ export function GameBoard({ gameState, onPlayerInput, onLevelSelect }: GameBoard
           </div>
           
         </div>
+
+        {/* Mobile/Tablet Layout */}
+        <div className="lg:hidden flex flex-col items-center space-y-6 w-full max-w-sm py-8">
+          {/* Progress Indicators */}
+          <ProgressIndicators 
+            currentStep={gameState.currentStep}
+            maxSteps={gameState.maxSteps}
+            gameStatus={gameState.gameStatus}
+          />
+          
+          {/* Code Display */}
+          <div className="w-full flex justify-center px-2">
+            <CodeDisplay 
+              codeSequence={gameState.displaySequence}
+              currentStep={gameState.currentStep}
+              gameStatus={gameState.gameStatus}
+            />
+          </div>
+          
+          {/* Grid Progress Display */}
+          <div className="game-element">
+            <GridProgress 
+              currentPosition={gameState.currentPosition}
+              gameStatus={gameState.gameStatus}
+              codeSequence={gameState.codeSequence}
+              currentStep={gameState.currentStep}
+              gridSize={gameState.gridSize}
+              displaySequence={gameState.displaySequence}
+              level={gameState.level}
+            />
+          </div>
+          
+          {/* Controls - Always show on mobile */}
+          <div className="game-element">
+            <DirectionalControls 
+              onInput={onPlayerInput}
+              disabled={!gameState.isWaitingForInput}
+            />
+          </div>
+        </div>
+        
       </div>
       
       {/* Branding Footer */}
-      <div className="absolute bottom-6 left-6">
+      <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6">
         <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+          <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-xs">QA</span>
           </div>
-          <span className="text-gray-600 font-medium">Queen's Academy iCoding</span>
+          <span className="text-gray-600 font-medium text-sm sm:text-base hidden sm:block">Queen's Academy iCoding</span>
+          <span className="text-gray-600 font-medium text-xs sm:hidden">QA iCoding</span>
         </div>
       </div>
     </>

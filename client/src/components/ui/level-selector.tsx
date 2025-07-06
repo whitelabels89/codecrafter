@@ -13,25 +13,25 @@ export function LevelSelector({ currentLevel, onLevelSelect, onClose }: LevelSel
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">Pilih Level</h2>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="flex justify-between items-center mb-4 sm:mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Pilih Level</h2>
           <button 
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 text-2xl"
+            className="text-gray-500 hover:text-gray-700 text-2xl sm:text-3xl"
           >
             ×
           </button>
         </div>
         
-        <div className="grid grid-cols-10 gap-3">
+        <div className="grid grid-cols-5 sm:grid-cols-8 lg:grid-cols-10 gap-2 sm:gap-3">
           {levels.map((level) => (
             <button
               key={level}
               onClick={() => handleLevelClick(level)}
               className={`
-                w-10 h-10 rounded-lg font-bold text-sm transition-all duration-200
+                w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-lg font-bold text-xs sm:text-sm transition-all duration-200
                 ${level === currentLevel 
                   ? 'bg-teal-primary text-white' 
                   : 'bg-blue-400 text-white hover:bg-blue-500'

@@ -351,7 +351,7 @@ export default function Game() {
     initializeGame();
   }, [gameState.level]);
 
-  // Keyboard controls
+  // Keyboard and touch controls
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (!gameState.isWaitingForInput) return;
@@ -370,8 +370,50 @@ export default function Game() {
       }
     };
 
+    // Touch gesture support
+    let touchStartX: number | null = null;
+    let touchStartY: number | null = null;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (!gameState.isWaitingForInput || touchStartX === null || touchStartY === null) return;
+      
+      const touch = e.changedTouches[0];
+      const touchEndX = touch.clientX;
+      const touchEndY = touch.clientY;
+      
+      const deltaX = touchEndX - touchStartX;
+      const deltaY = touchEndY - touchStartY;
+      const minSwipeDistance = 50;
+      
+      if (Math.abs(deltaX) > minSwipeDistance || Math.abs(deltaY) > minSwipeDistance) {
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+          // Horizontal swipe
+          handlePlayerInput(deltaX > 0 ? 'right' : 'left');
+        } else {
+          // Vertical swipe
+          handlePlayerInput(deltaY > 0 ? 'down' : 'up');
+        }
+      }
+      
+      touchStartX = null;
+      touchStartY = null;
+    };
+
     document.addEventListener('keydown', handleKeyPress);
-    return () => document.removeEventListener('keydown', handleKeyPress);
+    document.addEventListener('touchstart', handleTouchStart, { passive: false });
+    document.addEventListener('touchend', handleTouchEnd, { passive: false });
+    
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchend', handleTouchEnd);
+    };
   }, [gameState.isWaitingForInput, handlePlayerInput]);
 
   return (
