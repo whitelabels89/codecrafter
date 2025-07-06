@@ -122,20 +122,127 @@ export default function Game() {
       displaySequence.push(`if ●:`); // Tanpa indentasi
       displaySequence.push(`  ${command2}()`); // 2 spasi indentasi
       displaySequence.push(`  ${command3}()`); // 2 spasi indentasi
-    } else {
-      // Level 26+: Complex if statements with multiple conditions
+    } else if (level <= 30) {
+      // Level 26-30: If-else statements
       const command1 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
       const command2 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
       const command3 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
       const command4 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
       
       codeSequence = [command1, command2, command3, command4];
-      displaySequence = [`${command1}()`]; // Tanpa indentasi
-      displaySequence.push(`if ●:`); // Tanpa indentasi
-      displaySequence.push(`  ${command2}()`); // 2 spasi indentasi
-      displaySequence.push(`${command3}()`); // Tanpa indentasi
-      displaySequence.push(`if ●:`); // Tanpa indentasi
-      displaySequence.push(`  ${command4}()`); // 2 spasi indentasi
+      displaySequence = [`${command1}()`];
+      displaySequence.push(`if ●:`);
+      displaySequence.push(`  ${command2}()`);
+      displaySequence.push(`else:`);
+      displaySequence.push(`  ${command3}()`);
+      displaySequence.push(`${command4}()`);
+    } else if (level <= 35) {
+      // Level 31-35: Nested if statements
+      const command1 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command2 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command3 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command4 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      
+      codeSequence = [command1, command2, command3, command4];
+      displaySequence = [`if ●:`];
+      displaySequence.push(`  ${command1}()`);
+      displaySequence.push(`  if ●:`);
+      displaySequence.push(`    ${command2}()`);
+      displaySequence.push(`    ${command3}()`);
+      displaySequence.push(`${command4}()`);
+    } else if (level <= 40) {
+      // Level 36-40: While loops with if conditions
+      const command1 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command2 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command3 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command4 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      
+      // Execute while loop with condition
+      for (let i = 0; i < 3; i++) {
+        codeSequence.push(command1);
+        codeSequence.push(command2);
+      }
+      codeSequence.push(command3);
+      codeSequence.push(command4);
+      
+      displaySequence = [`while ●:`];
+      displaySequence.push(`  ${command1}()`);
+      displaySequence.push(`  if ●:`);
+      displaySequence.push(`    ${command2}()`);
+      displaySequence.push(`${command3}()`);
+      displaySequence.push(`${command4}()`);
+    } else if (level <= 45) {
+      // Level 41-45: For loops with nested if-else
+      const command1 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command2 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command3 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command4 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      
+      // Execute for loop with nested conditions
+      for (let i = 0; i < 3; i++) {
+        codeSequence.push(command1);
+        codeSequence.push(command2);
+        codeSequence.push(command3);
+      }
+      codeSequence.push(command4);
+      
+      displaySequence = [`for i in range(3):`];
+      displaySequence.push(`  ${command1}()`);
+      displaySequence.push(`  if ●:`);
+      displaySequence.push(`    ${command2}()`);
+      displaySequence.push(`  else:`);
+      displaySequence.push(`    ${command3}()`);
+      displaySequence.push(`${command4}()`);
+    } else if (level <= 50) {
+      // Level 46-50: Functions with parameters
+      const command1 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command2 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command3 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command4 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      
+      // Function call sequence
+      for (let i = 0; i < 2; i++) {
+        codeSequence.push(command1);
+        codeSequence.push(command2);
+      }
+      codeSequence.push(command3);
+      codeSequence.push(command4);
+      
+      displaySequence = [`def langkah(n):`];
+      displaySequence.push(`  for i in range(n):`);
+      displaySequence.push(`    ${command1}()`);
+      displaySequence.push(`    ${command2}()`);
+      displaySequence.push(`langkah(2)`);
+      displaySequence.push(`${command3}()`);
+      displaySequence.push(`${command4}()`);
+    } else {
+      // Level 51+: Complex mixed structures
+      const command1 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command2 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command3 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command4 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command5 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      
+      // Complex nested structure
+      codeSequence.push(command1);
+      for (let i = 0; i < 2; i++) {
+        codeSequence.push(command2);
+        for (let j = 0; j < 2; j++) {
+          codeSequence.push(command3);
+        }
+        codeSequence.push(command4);
+      }
+      codeSequence.push(command5);
+      
+      displaySequence = [`${command1}()`];
+      displaySequence.push(`for i in range(2):`);
+      displaySequence.push(`  ${command2}()`);
+      displaySequence.push(`  while ●:`);
+      displaySequence.push(`    ${command3}()`);
+      displaySequence.push(`    if ●:`);
+      displaySequence.push(`      break`);
+      displaySequence.push(`  ${command4}()`);
+      displaySequence.push(`${command5}()`);
     }
     
     return { codeSequence, displaySequence };

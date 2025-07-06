@@ -68,24 +68,47 @@ export function GridProgress({
     const totalLines = displaySequence?.length || 1;
     const maxLineLength = displaySequence?.length ? Math.max(...displaySequence.map(line => line.length)) : 10;
     
+    // Count indentation levels and control structures
+    const maxIndentLevel = displaySequence?.length ? Math.max(...displaySequence.map(line => {
+      const indentLevel = Math.floor((line.match(/^ */)?.[0]?.length || 0) / 2);
+      return indentLevel;
+    })) : 0;
+    
+    const hasControlStructures = displaySequence?.some(line => 
+      line.includes('while') || line.includes('for') || line.includes('if') || 
+      line.includes('else') || line.includes('def') || line.includes('break')
+    ) || false;
+    
     // Base size calculation
-    let circleSize = 24; // Base size in Tailwind units
+    let circleSize = 24; // Base size in pixels
     
     // Adjust based on number of lines
     if (totalLines <= 2) {
       circleSize = 28; // Larger for simple code
     } else if (totalLines <= 4) {
       circleSize = 24; // Medium size
-    } else {
+    } else if (totalLines <= 6) {
       circleSize = 20; // Smaller for complex code
+    } else {
+      circleSize = 16; // Very small for very complex code
     }
     
     // Adjust based on line length
     if (maxLineLength > 30) {
-      circleSize = Math.max(circleSize - 4, 16); // Don't go below 16
+      circleSize = Math.max(circleSize - 4, 14); // Don't go below 14
     }
     
-    return { size: circleSize, gap: Math.max(circleSize / 4, 4) };
+    // Adjust based on indentation complexity
+    if (maxIndentLevel > 2) {
+      circleSize = Math.max(circleSize - 2, 12); // Don't go below 12
+    }
+    
+    // Additional adjustment for control structures
+    if (hasControlStructures && totalLines > 5) {
+      circleSize = Math.max(circleSize - 2, 10); // Don't go below 10
+    }
+    
+    return { size: circleSize, gap: Math.max(circleSize / 4, 3) };
   };
 
   const { size: circleSize, gap: gridGap } = calculateGridSize();

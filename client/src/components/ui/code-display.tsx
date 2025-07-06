@@ -9,12 +9,9 @@ export function CodeDisplay({ codeSequence, currentStep, gameStatus }: CodeDispl
     let baseClasses = "text-5xl font-bold transition-all duration-300 leading-tight";
     
     // Color coding based on statement type
-    if (line.includes('while')) {
-      baseClasses += " text-red-600"; // While loops in red/maroon
-    } else if (line.includes('for')) {
-      baseClasses += " text-red-600"; // For loops also in red/maroon
-    } else if (line.includes('if')) {
-      baseClasses += " text-red-600"; // If statements in red/maroon  
+    if (line.includes('while') || line.includes('for') || line.includes('if') || 
+        line.includes('else') || line.includes('def') || line.includes('break')) {
+      baseClasses += " text-red-600"; // Control structures in red/maroon
     } else {
       baseClasses += " text-blue-600"; // Commands in blue
     }

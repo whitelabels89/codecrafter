@@ -120,6 +120,16 @@ Changelog:
   - Created dynamic grid sizing based on code complexity
   - Added color coding: red for control structures, blue for commands
   - Grid automatically adjusts size based on code length and complexity
+- July 06, 2025. Implemented advanced loop and conditional structures:
+  - Extended level system to 51+ levels with sophisticated programming concepts
+  - Added if-else statements (levels 26-30)
+  - Implemented nested if statements (levels 31-35)
+  - Created while loops with if conditions (levels 36-40)
+  - Added for loops with nested if-else (levels 41-45)
+  - Introduced functions with parameters (levels 46-50)
+  - Complex mixed structures with break statements (levels 51+)
+  - Enhanced color coding to include else, def, break keywords
+  - Improved grid sizing algorithm for complex nested structures
 ```
 
 ## User Preferences
