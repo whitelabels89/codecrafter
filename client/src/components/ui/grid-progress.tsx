@@ -69,33 +69,36 @@ export function GridProgress({
   const calculateGridSize = () => {
     const totalLines = displaySequence?.length || 1;
     
-    // Special larger sizing for level 1 since arrow controls are smaller now
+    // Check if mobile screen size (using window width)
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+    
+    // Special sizing for level 1 and mobile
     if (level === 1) {
-      return { size: 70, gap: 12 }; // Large fixed size for level 1
+      return isMobile ? { size: 50, gap: 8 } : { size: 70, gap: 12 }; // Smaller on mobile
     }
     
     // Calculate estimated text height based on line count and font size
-    // Font size is 5xl (3rem = 48px) + line spacing (space-y-4 = 16px per gap)
-    const lineHeight = 48; // 5xl font size
-    const lineSpacing = 16; // space-y-4 gap
+    // Different font sizes for mobile vs desktop
+    const lineHeight = isMobile ? 32 : 48; // text-2xl vs text-5xl
+    const lineSpacing = isMobile ? 12 : 16; // space-y-3 vs space-y-4
     const estimatedCodeHeight = (totalLines * lineHeight) + ((totalLines - 1) * lineSpacing);
     
     // Calculate proportional circle size based on code height
     // Target: Grid should occupy similar visual weight as code text
     // Grid has 3x3 = 9 circles, so divide estimated height by grid arrangement
-    const targetGridHeight = estimatedCodeHeight * 1.2; // 120% of code height for larger proportion
+    const targetGridHeight = estimatedCodeHeight * (isMobile ? 1.0 : 1.2); // Less proportion on mobile
     const gridRows = 3;
-    const estimatedTotalGaps = (gridRows - 1) * 12; // Larger gap calculation
+    const estimatedTotalGaps = (gridRows - 1) * (isMobile ? 8 : 12); // Smaller gaps on mobile
     
     // Calculate circle size: (target height - gaps) / number of rows
-    let circleSize = Math.max((targetGridHeight - estimatedTotalGaps) / gridRows, 40);
+    let circleSize = Math.max((targetGridHeight - estimatedTotalGaps) / gridRows, isMobile ? 30 : 40);
     
-    // Ensure reasonable bounds - much larger default sizes
-    circleSize = Math.min(circleSize, 100); // Max size increased
-    circleSize = Math.max(circleSize, 40); // Min size increased
+    // Ensure reasonable bounds - different for mobile
+    circleSize = Math.min(circleSize, isMobile ? 60 : 100); // Smaller max on mobile
+    circleSize = Math.max(circleSize, isMobile ? 30 : 40); // Smaller min on mobile
     
     // Calculate proportional gap
-    const gap = Math.max(circleSize / 6, 4);
+    const gap = Math.max(circleSize / 8, isMobile ? 3 : 4);
     
     return { size: Math.round(circleSize), gap: Math.round(gap) };
   };
