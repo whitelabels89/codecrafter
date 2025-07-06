@@ -56,13 +56,6 @@ export function GameBoard({ gameState, onPlayerInput, onLevelSelect }: GameBoard
           
           {/* Game Section */}
           <div className="flex-1 flex flex-col items-center justify-center space-y-8">
-            {/* Progress Indicators */}
-            <ProgressIndicators 
-              currentStep={gameState.currentStep}
-              maxSteps={gameState.maxSteps}
-              gameStatus={gameState.gameStatus}
-            />
-            
             {/* Show directional controls only on level 1 */}
             {gameState.level === 1 && (
               <DirectionalControls 
@@ -84,7 +77,14 @@ export function GameBoard({ gameState, onPlayerInput, onLevelSelect }: GameBoard
           </div>
           
           {/* Code Display */}
-          <div className="flex-1 flex items-center justify-center ml-20">
+          <div className="flex-1 flex flex-col items-center justify-center ml-20 space-y-8">
+            {/* Progress Indicators for Desktop */}
+            <ProgressIndicators 
+              currentStep={gameState.currentStep}
+              maxSteps={gameState.maxSteps}
+              gameStatus={gameState.gameStatus}
+            />
+            
             <CodeDisplay 
               codeSequence={gameState.displaySequence}
               currentStep={gameState.currentStep}

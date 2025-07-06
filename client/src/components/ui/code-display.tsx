@@ -29,7 +29,7 @@ export function CodeDisplay({ codeSequence, currentStep, gameStatus }: CodeDispl
   };
 
   return (
-    <div className="text-left w-full">
+    <div className="text-center lg:text-left w-full">
       <div className="space-y-2 sm:space-y-3 lg:space-y-4 overflow-x-auto">
         {codeSequence.map((code, index) => (
           <div 
