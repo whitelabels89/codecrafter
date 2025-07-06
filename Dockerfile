@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN vite build && esbuild server/production-index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist --outfile=dist/index.js
 
 # Production stage
 FROM node:18-alpine AS production

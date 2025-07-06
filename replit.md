@@ -145,6 +145,12 @@ Changelog:
   - Fixed Render deployment by separating vite dependencies
   - Hidden menu dots on mobile, added mobile-friendly level selector button
   - Optimized touch targets and prevented zoom on focus
+- July 06, 2025. Removed progress indicators and fixed production deployment:
+  - Removed progress indicators from both mobile and desktop layouts
+  - Created server/production-index.ts to avoid vite imports in production
+  - Updated Dockerfile and render.yaml with correct build commands
+  - Fixed deployment errors by using production-specific entry point
+  - Ensured clean, minimal UI focused on game mechanics
 ```
 
 ## User Preferences

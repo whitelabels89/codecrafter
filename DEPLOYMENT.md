@@ -20,7 +20,7 @@ git push origin main
    - **Environment**: `Node`
    - **Region**: `Singapore` (closest to Indonesia)
    - **Branch**: `main`
-   - **Build Command**: `npm install && npm run build`
+   - **Build Command**: `npm install && vite build && esbuild server/production-index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist --outfile=dist/index.js`
    - **Start Command**: `npm start`
 
 ### Step 3: Environment Variables (Optional)

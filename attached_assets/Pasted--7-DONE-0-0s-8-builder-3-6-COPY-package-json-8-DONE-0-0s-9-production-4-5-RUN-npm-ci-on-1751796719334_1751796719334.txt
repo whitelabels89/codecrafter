@@ -1,0 +1,132 @@
+#7 DONE 0.0s
+#8 [builder 3/6] COPY package*.json ./
+#8 DONE 0.0s
+#9 [production 4/5] RUN npm ci --only=production && npm cache clean --force
+#9 0.172 npm warn config only Use `--omit=dev` to omit dev dependencies from the install.
+#9 ...
+#10 [builder 4/6] RUN npm install
+#10 7.733 npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+#10 7.812 npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+#10 ...
+#9 [production 4/5] RUN npm ci --only=production && npm cache clean --force
+#9 11.50 
+#9 11.50 added 372 packages, and audited 373 packages in 11s
+#9 11.50 
+#9 11.50 52 packages are looking for funding
+#9 11.50   run `npm fund` for details
+#9 11.50 
+#9 11.50 1 low severity vulnerability
+#9 11.50 
+#9 11.50 To address all issues, run:
+#9 11.50   npm audit fix
+#9 11.50 
+#9 11.50 Run `npm audit` for details.
+#9 11.50 npm notice
+#9 11.50 npm notice New major version of npm available! 10.8.2 -> 11.4.2
+#9 11.50 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.4.2
+#9 11.50 npm notice To update run: npm install -g npm@11.4.2
+#9 11.50 npm notice
+#9 11.75 npm warn using --force Recommended protections disabled.
+#9 ...
+#10 [builder 4/6] RUN npm install
+#10 14.75 
+#10 14.75 added 481 packages, and audited 482 packages in 15s
+#10 14.75 
+#10 14.75 64 packages are looking for funding
+#10 14.75   run `npm fund` for details
+#10 14.78 
+#10 14.78 9 vulnerabilities (1 low, 8 moderate)
+#10 14.78 
+#10 14.78 To address issues that do not require attention, run:
+#10 14.78   npm audit fix
+#10 14.78 
+#10 14.78 To address all issues (including breaking changes), run:
+#10 14.78   npm audit fix --force
+#10 14.78 
+#10 14.78 Run `npm audit` for details.
+#10 14.78 npm notice
+#10 14.78 npm notice New major version of npm available! 10.8.2 -> 11.4.2
+#10 14.78 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.4.2
+#10 14.78 npm notice To update run: npm install -g npm@11.4.2
+#10 14.78 npm notice
+#10 DONE 21.0s
+#9 [production 4/5] RUN npm ci --only=production && npm cache clean --force
+#9 DONE 21.0s
+#11 [builder 5/6] COPY . .
+#11 DONE 0.5s
+#12 [builder 6/6] RUN npm run build
+#12 0.223 
+#12 0.223 > rest-express@1.0.0 build
+#12 0.223 > vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+#12 0.223 
+#12 0.442 vite v5.4.19 building for production...
+#12 0.510 transforming...
+#12 0.803 Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+#12 0.803   npx update-browserslist-db@latest
+#12 0.803   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+#12 4.381 ✓ 1666 modules transformed.
+#12 4.557 rendering chunks...
+#12 4.565 computing gzip size...
+#12 4.575 ../dist/public/index.html                   0.63 kB │ gzip:  0.38 kB
+#12 4.575 ../dist/public/assets/index-CfqGgvVe.css   62.46 kB │ gzip: 11.23 kB
+#12 4.575 ../dist/public/assets/index-S-BbB1Ih.js   274.19 kB │ gzip: 88.13 kB
+#12 4.575 ✓ built in 4.10s
+#12 4.624 
+#12 4.624   dist/index.js  11.4kb
+#12 4.624 
+#12 4.624 ⚡ Done in 4ms
+#12 DONE 4.7s
+#13 [production 5/5] COPY --from=builder /app/dist ./dist
+#13 DONE 0.2s
+#14 exporting to docker image format
+#14 exporting layers
+#14 exporting layers 6.9s done
+#14 exporting manifest sha256:bb4045df4dc2e5a45f91fc9cd61f11105845c796f6fb0c2b656ca02e391e4f16 done
+#14 exporting config sha256:4bb8b08dd71c7e5f1396b9d503feaa1056586bd956c12dfb216fc5b55dd49ace
+#14 exporting config sha256:4bb8b08dd71c7e5f1396b9d503feaa1056586bd956c12dfb216fc5b55dd49ace 0.0s done
+#14 DONE 7.9s
+#15 exporting cache to client directory
+#15 preparing build cache for export
+#15 writing cache manifest sha256:86af855d1251a81d03d3d7bb7b821b429b5a7b1094e87740895ecc4bb2ac87b0 done
+#15 DONE 16.3s
+Pushing image to registry...
+Upload succeeded
+==> Deploying...
+> rest-express@1.0.0 start
+> NODE_ENV=production node dist/index.js
+node:internal/errors:496
+    ErrorCaptureStackTrace(err);
+    ^
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /app/dist/index.js
+    at new NodeError (node:internal/errors:405:5)
+    at packageResolve (node:internal/modules/esm/resolve:916:9)
+    at moduleResolve (node:internal/modules/esm/resolve:973:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1206:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:404:12)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:373:25)
+    at ModuleLoader.getModuleJob (node:internal/modules/esm/loader:250:38)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:39)
+    at link (node:internal/modules/esm/module_job:75:36) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Node.js v18.20.8
+==> Exited with status 1
+==> Common ways to troubleshoot your deploy: https://render.com/docs/troubleshooting-deploys
+> rest-express@1.0.0 start
+> NODE_ENV=production node dist/index.js
+node:internal/errors:496
+    ErrorCaptureStackTrace(err);
+    ^
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /app/dist/index.js
+    at new NodeError (node:internal/errors:405:5)
+    at packageResolve (node:internal/modules/esm/resolve:916:9)
+    at moduleResolve (node:internal/modules/esm/resolve:973:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1206:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:404:12)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:373:25)
+    at ModuleLoader.getModuleJob (node:internal/modules/esm/loader:250:38)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:76:39)
+    at link (node:internal/modules/esm/module_job:75:36) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Node.js v18.20.8
