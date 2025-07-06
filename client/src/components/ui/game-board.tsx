@@ -77,14 +77,7 @@ export function GameBoard({ gameState, onPlayerInput, onLevelSelect }: GameBoard
           </div>
           
           {/* Code Display */}
-          <div className="flex-1 flex flex-col items-center justify-center ml-20 space-y-8">
-            {/* Progress Indicators for Desktop */}
-            <ProgressIndicators 
-              currentStep={gameState.currentStep}
-              maxSteps={gameState.maxSteps}
-              gameStatus={gameState.gameStatus}
-            />
-            
+          <div className="flex-1 flex items-center justify-center ml-20">
             <CodeDisplay 
               codeSequence={gameState.displaySequence}
               currentStep={gameState.currentStep}
