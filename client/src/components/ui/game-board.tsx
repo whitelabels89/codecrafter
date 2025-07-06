@@ -70,6 +70,7 @@ export function GameBoard({ gameState, onPlayerInput, onLevelSelect }: GameBoard
               currentStep={gameState.currentStep}
               gridSize={gameState.gridSize}
               displaySequence={gameState.displaySequence}
+              level={gameState.level}
             />
           </div>
           

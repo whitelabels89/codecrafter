@@ -7,6 +7,7 @@ interface GridProgressProps {
   currentStep: number;
   gridSize: { width: number; height: number };
   displaySequence: string[];
+  level: number;
 }
 
 export function GridProgress({ 
@@ -15,7 +16,8 @@ export function GridProgress({
   codeSequence, 
   currentStep,
   gridSize,
-  displaySequence 
+  displaySequence,
+  level
 }: GridProgressProps) {
   const [celebrationActive, setCelebrationActive] = useState(false);
 
@@ -66,6 +68,11 @@ export function GridProgress({
   // Calculate dynamic grid size based on code text height proportional sizing
   const calculateGridSize = () => {
     const totalLines = displaySequence?.length || 1;
+    
+    // Special larger sizing for level 1 since arrow controls are smaller now
+    if (level === 1) {
+      return { size: 70, gap: 12 }; // Large fixed size for level 1
+    }
     
     // Calculate estimated text height based on line count and font size
     // Font size is 5xl (3rem = 48px) + line spacing (space-y-4 = 16px per gap)
