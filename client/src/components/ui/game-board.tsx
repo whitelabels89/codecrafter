@@ -79,9 +79,11 @@ export function GameBoard({ gameState, onPlayerInput, onLevelSelect }: GameBoard
           {/* Code Display */}
           <div className="flex-1 flex items-center justify-center ml-20">
             <CodeDisplay 
-              codeSequence={gameState.displaySequence}
+              codeSequence={gameState.codeSequence}
               currentStep={gameState.currentStep}
               gameStatus={gameState.gameStatus}
+              displaySequence={gameState.displaySequence}
+              level={gameState.level}
             />
           </div>
           
@@ -100,9 +102,11 @@ export function GameBoard({ gameState, onPlayerInput, onLevelSelect }: GameBoard
           {/* Code Display */}
           <div className="w-full flex justify-center px-2">
             <CodeDisplay 
-              codeSequence={gameState.displaySequence}
+              codeSequence={gameState.codeSequence}
               currentStep={gameState.currentStep}
               gameStatus={gameState.gameStatus}
+              displaySequence={gameState.displaySequence}
+              level={gameState.level}
             />
           </div>
           

@@ -129,7 +129,15 @@ export default function Game() {
       const command3 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
       const command4 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
       
-      codeSequence = [command1, command2, command3, command4];
+      // For if-else: execute command1, then either command2 OR command3 (not both), then command4
+      // Let's randomly choose the condition result
+      const conditionResult = Math.random() > 0.5;
+      if (conditionResult) {
+        codeSequence = [command1, command2, command4]; // if condition is true
+      } else {
+        codeSequence = [command1, command3, command4]; // else condition
+      }
+      
       displaySequence = [`${command1}()`];
       displaySequence.push(`if ●:`);
       displaySequence.push(`  ${command2}()`);
