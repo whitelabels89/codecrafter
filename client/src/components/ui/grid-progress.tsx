@@ -6,6 +6,7 @@ interface GridProgressProps {
   codeSequence: string[];
   currentStep: number;
   gridSize: { width: number; height: number };
+  displaySequence: string[];
 }
 
 export function GridProgress({ 
@@ -13,7 +14,8 @@ export function GridProgress({
   gameStatus, 
   codeSequence, 
   currentStep,
-  gridSize 
+  gridSize,
+  displaySequence 
 }: GridProgressProps) {
   const [celebrationActive, setCelebrationActive] = useState(false);
 
@@ -61,6 +63,33 @@ export function GridProgress({
 
   const path = calculatePath();
 
+  // Calculate dynamic grid size based on code complexity
+  const calculateGridSize = () => {
+    const totalLines = displaySequence?.length || 1;
+    const maxLineLength = displaySequence?.length ? Math.max(...displaySequence.map(line => line.length)) : 10;
+    
+    // Base size calculation
+    let circleSize = 24; // Base size in Tailwind units
+    
+    // Adjust based on number of lines
+    if (totalLines <= 2) {
+      circleSize = 28; // Larger for simple code
+    } else if (totalLines <= 4) {
+      circleSize = 24; // Medium size
+    } else {
+      circleSize = 20; // Smaller for complex code
+    }
+    
+    // Adjust based on line length
+    if (maxLineLength > 30) {
+      circleSize = Math.max(circleSize - 4, 16); // Don't go below 16
+    }
+    
+    return { size: circleSize, gap: Math.max(circleSize / 4, 4) };
+  };
+
+  const { size: circleSize, gap: gridGap } = calculateGridSize();
+
   const getCircleStyle = (x: number, y: number) => {
     const isStartPosition = x === 1 && y === 1;
     const isCurrentPosition = x === currentPosition.x && y === currentPosition.y;
@@ -68,7 +97,7 @@ export function GridProgress({
     const isInPath = pathIndex !== -1;
     const isCompleted = pathIndex !== -1 && pathIndex < currentStep;
     
-    const baseClasses = "w-24 h-24 rounded-full transition-all duration-300";
+    const baseClasses = "rounded-full transition-all duration-300";
     const celebrationClasses = celebrationActive ? "animate-pulse" : "";
     
     if (isCurrentPosition) {
@@ -87,14 +116,34 @@ export function GridProgress({
       return `${baseClasses} bg-teal-primary ${celebrationClasses}`;
     }
   };
+  
+  const getCircleInlineStyle = () => {
+    return {
+      width: `${circleSize * 4}px`, // Convert to pixels
+      height: `${circleSize * 4}px`
+    };
+  };
 
   return (
-    <div className="grid grid-cols-3 gap-6 p-6">
+    <div 
+      className="grid grid-cols-3 p-6"
+      style={{ gap: `${gridGap * 4}px` }}
+    >
       {Array.from({ length: gridSize.height }, (_, y) =>
         Array.from({ length: gridSize.width }, (_, x) => (
-          <div key={`${x}-${y}`} className={getCircleStyle(x, y)}>
+          <div 
+            key={`${x}-${y}`} 
+            className={getCircleStyle(x, y)}
+            style={getCircleInlineStyle()}
+          >
             {currentPosition.x === x && currentPosition.y === y && (
-              <div className="w-8 h-8 bg-teal-primary rounded-full"></div>
+              <div 
+                className="bg-teal-primary rounded-full"
+                style={{
+                  width: `${circleSize * 2}px`,
+                  height: `${circleSize * 2}px`
+                }}
+              ></div>
             )}
           </div>
         ))

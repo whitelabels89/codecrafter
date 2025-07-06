@@ -6,23 +6,27 @@ interface CodeDisplayProps {
 
 export function CodeDisplay({ codeSequence, currentStep, gameStatus }: CodeDisplayProps) {
   const getLineStyle = (index: number, line: string = '') => {
-    // Different sizes for different types of code lines
-    const isIndented = line && line.startsWith('  ');
+    // Calculate indentation level
+    const indentLevel = Math.floor((line.match(/^ */)?.[0]?.length || 0) / 2);
     const isLoop = line && (line.includes('for') || line.includes('def') || line.includes('while'));
+    const isIf = line && line.includes('if');
     
-    let baseClasses = "";
-    if (isLoop) {
-      baseClasses = "text-5xl font-bold transition-all duration-300";
-      // Different colors for different loop types
-      if (line.includes('while')) {
-        baseClasses += " text-red-600"; // While loops in red/maroon
-      } else {
-        baseClasses += " text-code-blue"; // For loops in blue
-      }
-    } else if (isIndented) {
-      baseClasses = "text-5xl font-bold text-code-blue transition-all duration-300 ml-8";
+    let baseClasses = "text-5xl font-bold transition-all duration-300 leading-tight";
+    
+    // Add left margin based on indentation level
+    if (indentLevel > 0) {
+      baseClasses += ` ml-${indentLevel * 12}`;
+    }
+    
+    // Color coding based on statement type
+    if (line.includes('while')) {
+      baseClasses += " text-red-600"; // While loops in red/maroon
+    } else if (line.includes('for')) {
+      baseClasses += " text-red-600"; // For loops also in red/maroon
+    } else if (line.includes('if')) {
+      baseClasses += " text-red-600"; // If statements in red/maroon  
     } else {
-      baseClasses = "text-6xl font-bold text-code-blue transition-all duration-300";
+      baseClasses += " text-blue-600"; // Commands in blue
     }
     
     if (index < currentStep) {
@@ -40,8 +44,8 @@ export function CodeDisplay({ codeSequence, currentStep, gameStatus }: CodeDispl
   };
 
   return (
-    <div className="text-center">
-      <div className="space-y-8">
+    <div className="text-left">
+      <div className="space-y-4">
         {codeSequence.map((code, index) => (
           <div 
             key={index}

@@ -71,6 +71,7 @@ export function GameBoard({ gameState, onPlayerInput, onLevelSelect }: GameBoard
               codeSequence={gameState.codeSequence}
               currentStep={gameState.currentStep}
               gridSize={gameState.gridSize}
+              displaySequence={gameState.displaySequence}
             />
           </div>
           

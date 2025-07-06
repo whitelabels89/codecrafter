@@ -38,65 +38,104 @@ export default function Game() {
     let displaySequence: string[] = [];
     
     if (level <= 3) {
-      // Basic movement levels
-      const sequenceLength = Math.min(3 + level, 6);
+      // Level 1-3: Basic single commands
+      const sequenceLength = Math.min(1 + level, 4);
       for (let i = 0; i < sequenceLength; i++) {
         const randomCommand = basicCommands[Math.floor(Math.random() * basicCommands.length)];
         codeSequence.push(randomCommand);
       }
       displaySequence = codeSequence.map(cmd => `${cmd}()`);
     } else if (level <= 6) {
-      // Simple loop levels: for i in range(2): kanan()
-      const loopCount = Math.min(level - 2, 3);
-      const command = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      // Level 4-6: Simple while loops
+      const command1 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command2 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command3 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
       
-      // Generate the actual sequence
-      for (let i = 0; i < loopCount; i++) {
-        codeSequence.push(command);
-      }
-      
-      // Display with loop syntax
-      displaySequence = [`for i in range(${loopCount}):`];
-      displaySequence.push(`  ${command}()`);
-    } else if (level <= 10) {
-      // Nested loops or multiple commands in loop
-      const loopCount = 2;
-      const commands = basicCommands.slice(0, 2); // Only use 2 commands
-      
-      for (let i = 0; i < loopCount; i++) {
-        commands.forEach(cmd => codeSequence.push(cmd));
-      }
-      
-      displaySequence = [`for i in range(${loopCount}):`];
-      commands.forEach(cmd => displaySequence.push(`  ${cmd}()`));
-    } else if (level <= 15) {
-      // While loop levels - seperti di gambar: kanan(), while ●: kanan(), atas()
-      const firstCommand = basicCommands[Math.floor(Math.random() * basicCommands.length)];
-      const loopCommand = basicCommands[Math.floor(Math.random() * basicCommands.length)];
-      const lastCommand = basicCommands[Math.floor(Math.random() * basicCommands.length)];
-      
-      // Sequence: first command, then loop command, then last command
-      codeSequence.push(firstCommand);
-      codeSequence.push(loopCommand);
-      codeSequence.push(lastCommand);
-      
-      displaySequence = [`${firstCommand}()`];
+      codeSequence = [command1, command2, command3];
+      displaySequence = [`${command1}()`];
       displaySequence.push(`while ●:`);
-      displaySequence.push(`  ${loopCommand}()`);
-      displaySequence.push(`  ${lastCommand}()`);
-    } else {
-      // Advanced levels with functions and while loops
-      const repeatCount = Math.min(level - 12, 4);
-      const command = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      displaySequence.push(`  ${command2}()`);
+      displaySequence.push(`  ${command3}()`);
+    } else if (level <= 10) {
+      // Level 7-10: Nested while loops
+      const command1 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command2 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command3 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command4 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
       
-      for (let i = 0; i < repeatCount; i++) {
-        codeSequence.push(command);
+      codeSequence = [command1, command2, command3, command4];
+      displaySequence = [`while ●:`];
+      displaySequence.push(`  ${command1}()`);
+      displaySequence.push(`  ${command2}()`);
+      displaySequence.push(`while ●:`);
+      displaySequence.push(`  ${command3}()`);
+      displaySequence.push(`  ${command4}()`);
+    } else if (level <= 15) {
+      // Level 11-15: For loops with high repetition
+      const loopCount = Math.min(level - 7, 9);
+      const command1 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command2 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command3 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      
+      // Generate sequence for large loops
+      for (let i = 0; i < loopCount; i++) {
+        codeSequence.push(command1);
       }
+      for (let i = 0; i < 3; i++) {
+        codeSequence.push(command2);
+      }
+      codeSequence.push(command3);
       
-      displaySequence = [`def move():`];
-      displaySequence.push(`  ${command}()`);
-      displaySequence.push(`for i in range(${repeatCount}):`);
-      displaySequence.push(`  move()`);
+      displaySequence = [`for i in range(${loopCount}):`];
+      displaySequence.push(`  ${command1}()`);
+      displaySequence.push(`for i in range(3):`);
+      displaySequence.push(`  ${command2}()`);
+      displaySequence.push(`${command3}()`);
+    } else if (level <= 20) {
+      // Level 16-20: Nested for loops
+      const command1 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command2 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command3 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      
+      // Generate nested loop sequence
+      for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+          codeSequence.push(command1);
+        }
+        codeSequence.push(command2);
+      }
+      codeSequence.push(command3);
+      
+      displaySequence = [`for i in range(4):`];
+      displaySequence.push(`  for i in range(4):`);
+      displaySequence.push(`    ${command1}()`);
+      displaySequence.push(`  ${command2}()`);
+      displaySequence.push(`${command3}()`);
+    } else if (level <= 25) {
+      // Level 21-25: If statements with conditions
+      const command1 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command2 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command3 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      
+      codeSequence = [command1, command2, command3];
+      displaySequence = [`${command1}()`];
+      displaySequence.push(`if ●:`);
+      displaySequence.push(`  ${command2}()`);
+      displaySequence.push(`  ${command3}()`);
+    } else {
+      // Level 26+: Complex if statements with multiple conditions
+      const command1 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command2 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command3 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      const command4 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
+      
+      codeSequence = [command1, command2, command3, command4];
+      displaySequence = [`${command1}()`];
+      displaySequence.push(`if ●:`);
+      displaySequence.push(`  ${command2}()`);
+      displaySequence.push(`${command3}()`);
+      displaySequence.push(`if ●:`);
+      displaySequence.push(`  ${command4}()`);
     }
     
     return { codeSequence, displaySequence };
