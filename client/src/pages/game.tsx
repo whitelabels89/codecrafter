@@ -72,7 +72,7 @@ export default function Game() {
       displaySequence.push(`  ${command4}()`);
     } else if (level <= 15) {
       // Level 11-15: For loops with high repetition
-      const loopCount = Math.min(level - 7, 9);
+      const loopCount = Math.min(level - 8, 9); // Perbaikan perhitungan
       const command1 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
       const command2 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
       const command3 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
@@ -87,9 +87,9 @@ export default function Game() {
       codeSequence.push(command3);
       
       displaySequence = [`for i in range(${loopCount}):`];
-      displaySequence.push(`  ${command1}()`);
+      displaySequence.push(`  ${command1}()`); // Dengan indentasi 2 spasi
       displaySequence.push(`for i in range(3):`);
-      displaySequence.push(`  ${command2}()`);
+      displaySequence.push(`  ${command2}()`); // Dengan indentasi 2 spasi
       displaySequence.push(`${command3}()`);
     } else if (level <= 20) {
       // Level 16-20: Nested for loops
@@ -107,10 +107,10 @@ export default function Game() {
       codeSequence.push(command3);
       
       displaySequence = [`for i in range(4):`];
-      displaySequence.push(`  for i in range(4):`);
-      displaySequence.push(`    ${command1}()`);
-      displaySequence.push(`  ${command2}()`);
-      displaySequence.push(`${command3}()`);
+      displaySequence.push(`  for i in range(4):`); // 2 spasi indentasi
+      displaySequence.push(`    ${command1}()`); // 4 spasi indentasi (nested)
+      displaySequence.push(`  ${command2}()`); // 2 spasi indentasi
+      displaySequence.push(`${command3}()`); // Tanpa indentasi
     } else if (level <= 25) {
       // Level 21-25: If statements with conditions
       const command1 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
@@ -118,10 +118,10 @@ export default function Game() {
       const command3 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
       
       codeSequence = [command1, command2, command3];
-      displaySequence = [`${command1}()`];
-      displaySequence.push(`if ●:`);
-      displaySequence.push(`  ${command2}()`);
-      displaySequence.push(`  ${command3}()`);
+      displaySequence = [`${command1}()`]; // Tanpa indentasi
+      displaySequence.push(`if ●:`); // Tanpa indentasi
+      displaySequence.push(`  ${command2}()`); // 2 spasi indentasi
+      displaySequence.push(`  ${command3}()`); // 2 spasi indentasi
     } else {
       // Level 26+: Complex if statements with multiple conditions
       const command1 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
@@ -130,12 +130,12 @@ export default function Game() {
       const command4 = basicCommands[Math.floor(Math.random() * basicCommands.length)];
       
       codeSequence = [command1, command2, command3, command4];
-      displaySequence = [`${command1}()`];
-      displaySequence.push(`if ●:`);
-      displaySequence.push(`  ${command2}()`);
-      displaySequence.push(`${command3}()`);
-      displaySequence.push(`if ●:`);
-      displaySequence.push(`  ${command4}()`);
+      displaySequence = [`${command1}()`]; // Tanpa indentasi
+      displaySequence.push(`if ●:`); // Tanpa indentasi
+      displaySequence.push(`  ${command2}()`); // 2 spasi indentasi
+      displaySequence.push(`${command3}()`); // Tanpa indentasi
+      displaySequence.push(`if ●:`); // Tanpa indentasi
+      displaySequence.push(`  ${command4}()`); // 2 spasi indentasi
     }
     
     return { codeSequence, displaySequence };

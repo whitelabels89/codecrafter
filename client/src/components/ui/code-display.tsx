@@ -6,17 +6,7 @@ interface CodeDisplayProps {
 
 export function CodeDisplay({ codeSequence, currentStep, gameStatus }: CodeDisplayProps) {
   const getLineStyle = (index: number, line: string = '') => {
-    // Calculate indentation level
-    const indentLevel = Math.floor((line.match(/^ */)?.[0]?.length || 0) / 2);
-    const isLoop = line && (line.includes('for') || line.includes('def') || line.includes('while'));
-    const isIf = line && line.includes('if');
-    
     let baseClasses = "text-5xl font-bold transition-all duration-300 leading-tight";
-    
-    // Add left margin based on indentation level
-    if (indentLevel > 0) {
-      baseClasses += ` ml-${indentLevel * 12}`;
-    }
     
     // Color coding based on statement type
     if (line.includes('while')) {
@@ -42,6 +32,14 @@ export function CodeDisplay({ codeSequence, currentStep, gameStatus }: CodeDispl
       return `${baseClasses} opacity-50`;
     }
   };
+  
+  const getIndentStyle = (line: string) => {
+    // Calculate indentation level based on leading spaces
+    const indentLevel = Math.floor((line.match(/^ */)?.[0]?.length || 0) / 2);
+    return {
+      marginLeft: `${indentLevel * 48}px` // 48px per indentation level
+    };
+  };
 
   return (
     <div className="text-left">
@@ -50,6 +48,7 @@ export function CodeDisplay({ codeSequence, currentStep, gameStatus }: CodeDispl
           <div 
             key={index}
             className={getLineStyle(index, code)}
+            style={getIndentStyle(code)}
           >
             {code}
           </div>
