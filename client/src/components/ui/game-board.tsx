@@ -104,13 +104,6 @@ export function GameBoard({ gameState, onPlayerInput, onLevelSelect }: GameBoard
             Level {gameState.level}
           </button>
           
-          {/* Progress Indicators */}
-          <ProgressIndicators 
-            currentStep={gameState.currentStep}
-            maxSteps={gameState.maxSteps}
-            gameStatus={gameState.gameStatus}
-          />
-          
           {/* Code Display */}
           <div className="w-full flex justify-center px-2">
             <CodeDisplay 
