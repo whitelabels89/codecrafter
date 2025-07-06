@@ -76,19 +76,19 @@ export function GridProgress({
     // Calculate proportional circle size based on code height
     // Target: Grid should occupy similar visual weight as code text
     // Grid has 3x3 = 9 circles, so divide estimated height by grid arrangement
-    const targetGridHeight = estimatedCodeHeight * 0.8; // 80% of code height for proportion
+    const targetGridHeight = estimatedCodeHeight * 1.2; // 120% of code height for larger proportion
     const gridRows = 3;
-    const estimatedTotalGaps = (gridRows - 1) * 8; // 8px gap between circles
+    const estimatedTotalGaps = (gridRows - 1) * 12; // Larger gap calculation
     
     // Calculate circle size: (target height - gaps) / number of rows
-    let circleSize = Math.max((targetGridHeight - estimatedTotalGaps) / gridRows, 20);
+    let circleSize = Math.max((targetGridHeight - estimatedTotalGaps) / gridRows, 40);
     
-    // Ensure reasonable bounds
-    circleSize = Math.min(circleSize, 60); // Max size
-    circleSize = Math.max(circleSize, 20); // Min size
+    // Ensure reasonable bounds - much larger default sizes
+    circleSize = Math.min(circleSize, 100); // Max size increased
+    circleSize = Math.max(circleSize, 40); // Min size increased
     
     // Calculate proportional gap
-    const gap = Math.max(circleSize / 8, 2);
+    const gap = Math.max(circleSize / 6, 4);
     
     return { size: Math.round(circleSize), gap: Math.round(gap) };
   };
