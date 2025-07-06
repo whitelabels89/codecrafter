@@ -20,10 +20,9 @@ export function CodeDisplay({ codeSequence, currentStep, gameStatus }: CodeDispl
       // Completed code line
       return `${baseClasses} opacity-25`;
     } else if (index === currentStep) {
-      // Current code line
-      const breathingClass = gameStatus === 'playing' ? 'breathing' : '';
+      // Current code line - no breathing animation
       const shakeClass = gameStatus === 'error' ? 'shaking' : '';
-      return `${baseClasses} ${breathingClass} ${shakeClass}`;
+      return `${baseClasses} ${shakeClass}`;
     } else {
       // Future code line
       return `${baseClasses} opacity-50`;

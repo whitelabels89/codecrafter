@@ -5,7 +5,7 @@ interface LevelSelectorProps {
 }
 
 export function LevelSelector({ currentLevel, onLevelSelect, onClose }: LevelSelectorProps) {
-  const levels = Array.from({ length: 20 }, (_, i) => i + 1);
+  const levels = Array.from({ length: 60 }, (_, i) => i + 1);
   
   const handleLevelClick = (level: number) => {
     onLevelSelect(level);
@@ -14,7 +14,7 @@ export function LevelSelector({ currentLevel, onLevelSelect, onClose }: LevelSel
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4">
+      <div className="bg-white rounded-2xl p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-800">Pilih Level</h2>
           <button 
@@ -25,22 +25,19 @@ export function LevelSelector({ currentLevel, onLevelSelect, onClose }: LevelSel
           </button>
         </div>
         
-        <div className="grid grid-cols-5 gap-3">
+        <div className="grid grid-cols-10 gap-3">
           {levels.map((level) => (
             <button
               key={level}
               onClick={() => handleLevelClick(level)}
               className={`
-                w-12 h-12 rounded-lg font-bold text-lg transition-all duration-200
+                w-10 h-10 rounded-lg font-bold text-sm transition-all duration-200
                 ${level === currentLevel 
                   ? 'bg-teal-primary text-white' 
-                  : level <= currentLevel 
-                    ? 'bg-green-400 text-white hover:bg-green-500' 
-                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  : 'bg-blue-400 text-white hover:bg-blue-500'
                 }
-                ${level <= currentLevel ? 'hover:scale-105' : ''}
+                hover:scale-105
               `}
-              disabled={level > currentLevel}
             >
               {level}
             </button>

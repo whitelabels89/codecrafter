@@ -124,15 +124,11 @@ export function GridProgress({
     const celebrationClasses = celebrationActive ? "animate-pulse" : "";
     
     if (isCurrentPosition) {
-      // Current position - white circle with breathing animation
-      const breathingClass = gameStatus === 'playing' ? 'breathing' : '';
+      // Current position - white circle with no breathing animation
       const shakeClass = gameStatus === 'error' ? 'shaking' : '';
-      return `${baseClasses} border-4 border-teal-primary bg-white flex items-center justify-center ${breathingClass} ${shakeClass} ${celebrationClasses}`;
-    } else if (isCompleted) {
-      // Completed positions - filled teal
-      return `${baseClasses} bg-teal-primary ${celebrationClasses}`;
+      return `${baseClasses} border-4 border-teal-primary bg-white flex items-center justify-center ${shakeClass} ${celebrationClasses}`;
     } else if (isInPath) {
-      // Future positions in path - pink/red
+      // All positions in path (completed and future) - keep same color to avoid confusion
       return `${baseClasses} bg-pink-primary ${celebrationClasses}`;
     } else {
       // Regular positions - teal
