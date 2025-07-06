@@ -5,7 +5,7 @@ interface CodeDisplayProps {
 }
 
 export function CodeDisplay({ codeSequence, currentStep, gameStatus }: CodeDisplayProps) {
-  const getLineStyle = (index: number, line: string = '') => {
+  const getLineStyle = (line: string = '') => {
     let baseClasses = "text-5xl font-bold transition-all duration-300 leading-tight";
     
     // Color coding based on statement type
@@ -16,17 +16,8 @@ export function CodeDisplay({ codeSequence, currentStep, gameStatus }: CodeDispl
       baseClasses += " text-blue-600"; // Commands in blue
     }
     
-    if (index < currentStep) {
-      // Completed code line
-      return `${baseClasses} opacity-25`;
-    } else if (index === currentStep) {
-      // Current code line - no breathing animation
-      const shakeClass = gameStatus === 'error' ? 'shaking' : '';
-      return `${baseClasses} ${shakeClass}`;
-    } else {
-      // Future code line
-      return `${baseClasses} opacity-50`;
-    }
+    // No step indicators - all code shown equally
+    return baseClasses;
   };
   
   const getIndentStyle = (line: string) => {
@@ -43,7 +34,7 @@ export function CodeDisplay({ codeSequence, currentStep, gameStatus }: CodeDispl
         {codeSequence.map((code, index) => (
           <div 
             key={index}
-            className={getLineStyle(index, code)}
+            className={getLineStyle(code)}
             style={getIndentStyle(code)}
           >
             {code}

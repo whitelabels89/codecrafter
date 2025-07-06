@@ -124,9 +124,14 @@ export function GridProgress({
     const celebrationClasses = celebrationActive ? "animate-pulse" : "";
     
     if (isCurrentPosition) {
-      // Current position - white circle with no breathing animation
+      // Current position - keep original color but add radar effect
       const shakeClass = gameStatus === 'error' ? 'shaking' : '';
-      return `${baseClasses} border-4 border-teal-primary bg-white flex items-center justify-center ${shakeClass} ${celebrationClasses}`;
+      const radarClass = gameStatus === 'playing' ? 'radar-pulse' : '';
+      if (isInPath) {
+        return `${baseClasses} bg-pink-primary ${shakeClass} ${radarClass} ${celebrationClasses}`;
+      } else {
+        return `${baseClasses} bg-teal-primary ${shakeClass} ${radarClass} ${celebrationClasses}`;
+      }
     } else if (isInPath) {
       // All positions in path (completed and future) - keep same color to avoid confusion
       return `${baseClasses} bg-pink-primary ${celebrationClasses}`;
